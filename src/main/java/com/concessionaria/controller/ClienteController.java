@@ -1,5 +1,6 @@
 package com.concessionaria.controller;
 
+import com.concessionaria.model.Carro;
 import com.concessionaria.model.Cliente;
 import com.concessionaria.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class ClienteController {
     @GetMapping()
     public List<Cliente> todosClientes(){
         return clienteRepository.findAll();
+    }
+
+    @PutMapping("/{id}")
+    public Cliente atualizarCliente(@PathVariable("id") Long id, @RequestBody Cliente cliente){
+        cliente.setId(id);
+        return clienteRepository.save(cliente);
     }
 
     @DeleteMapping("/{id}")

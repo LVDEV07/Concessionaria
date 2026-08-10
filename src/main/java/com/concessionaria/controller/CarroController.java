@@ -29,6 +29,13 @@ public class CarroController {
         return carroRepository.findAll();
     }
 
+    @PutMapping("/{id}")
+    public Carro atualizarCarro(@PathVariable("id") Long id, @RequestBody Carro carro){
+        carro.setId(id);
+        return carroRepository.save(carro);
+    }
+
+
     @DeleteMapping("/{id}")
     public void deletarCarro(@PathVariable("id") Long id){
         carroRepository.deleteById(id);

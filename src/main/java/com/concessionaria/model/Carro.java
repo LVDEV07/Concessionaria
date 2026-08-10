@@ -25,7 +25,7 @@ public class Carro {
     @Column(nullable = false)
     private String marca;
 
-    @Column(name = "Ano_de_Fabricacao")
+    @Column(name = "Ano_de_Fabricacao", nullable = false)
     private Integer anoFabricacao;
 
     @Column(name = "Ano_do_Modelo", nullable = false)
@@ -37,7 +37,7 @@ public class Carro {
     @Column(unique = true)
     private String placa;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String chassi;
 
     @Column(nullable = false)
