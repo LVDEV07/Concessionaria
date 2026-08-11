@@ -20,6 +20,9 @@ public class Carro {
     private Long id;
 
     @Column(nullable = false)
+    private String nome;
+
+    @Column(nullable = false)
     private String modelo;
 
     @Column(nullable = false)

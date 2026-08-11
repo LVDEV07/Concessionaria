@@ -1,8 +1,15 @@
 package com.concessionaria.controller;
 
+import com.concessionaria.dto.CarroRequestDto;
+import com.concessionaria.dto.CarroResumoDto;
 import com.concessionaria.model.Carro;
 import com.concessionaria.repository.CarroRepository;
+import com.concessionaria.service.CarroService;
+import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,25 +19,28 @@ import java.util.List;
 public class CarroController {
 
     @Autowired
-    private CarroRepository carroRepository;
+    private CarroService carroService;
 
     @PostMapping
-    public Carro adicionarCarro(@RequestBody Carro carro){
-        return carroRepository.save(carro);
+    public ResponseEntity<CarroResumoDto> adicionarCarro(@RequestBody @Valid CarroRequestDto dto){
+        CarroResumoDto novoCarro = carroService.cadastrar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoCarro);
+
     }
 
     @GetMapping("/{id}")
-    public Carro pegarCarro(@PathVariable("id") Long id){
-        return carroRepository.findById(id).orElse(null);
+    public CarroResumoDto pegarCarro(@PathVariable("id") Long id){
+
+        return carroService.buscarPorId(id);
     }
 
     @GetMapping()
-    public List<Carro> todosCarros(){
-        return carroRepository.findAll();
+    public List<CarroResumoDto> todosCarros(){
+        return carroService.listarTodos();
     }
 
     @PutMapping("/{id}")
-    public Carro atualizarCarro(@PathVariable("id") Long id, @RequestBody Carro carro){
+    public Carro atualizarCarro(@PathVariable("id") Long id, @RequestBody @Valid CarroRequestDto dto){
         carro.setId(id);
         return carroRepository.save(carro);
     }
