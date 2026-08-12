@@ -1,9 +1,12 @@
 package com.concessionaria.controller;
 
-import com.concessionaria.model.Carro;
-import com.concessionaria.model.Cliente;
-import com.concessionaria.repository.ClienteRepository;
+import com.concessionaria.dto.ClienteRequestDto;
+import com.concessionaria.dto.ClienteResumoDto;
+import com.concessionaria.service.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,31 +14,33 @@ import java.util.List;
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
+
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteService clienteService;
 
     @PostMapping
-    public Cliente adicionarCliente(@RequestBody Cliente cliente){
-        return clienteRepository.save(cliente);
+    public ResponseEntity<ClienteResumoDto> adicionarCliente(@RequestBody @Valid ClienteRequestDto dto){
+        ClienteResumoDto novoCliente = clienteService.cadastrar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
     }
 
     @GetMapping("/{id}")
-    public Cliente pegarCliente(@PathVariable("id") Long id){
-        return clienteRepository.findById(id).orElse(null);
+    public ClienteResumoDto pegarCliente(@PathVariable("id") Long id){
+        return clienteService.buscarPorId(id);
     }
 
     @GetMapping()
-    public List<Cliente> todosClientes(){
-        return clienteRepository.findAll();
+    public List<ClienteResumoDto> todosClientes(){
+        return clienteService.listarTodos();
     }
 
     @PutMapping("/{id}")
-    public Cliente atualizarCliente(@PathVariable("id") Long id, @RequestBody Cliente cliente){
-        return clienteRepository.save(cliente);
+    public ClienteResumoDto atualizarCliente(@PathVariable("id") Long id, @RequestBody @Valid ClienteRequestDto dto){
+        return clienteService.atualizar(id, dto);
     }
 
     @DeleteMapping("/{id}")
     public void deletarCliente(@PathVariable("id") Long id){
-        clienteRepository.deleteById(id);
+        clienteService.deletar(id);
     }
 }
