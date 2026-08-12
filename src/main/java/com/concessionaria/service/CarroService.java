@@ -111,4 +111,22 @@ public class CarroService {
                 carro.getCondicao()
         );
     }
+
+    public List<CarroResumoDto> buscarComFiltro(String cor, Integer ano) {
+        List<Carro> carros;
+
+        if (cor != null && ano != null) {
+            carros = carroRepository.findByCorAndAnoFabricacao(cor, ano);
+        } else if (cor != null) {
+            carros = carroRepository.findByCor(cor);
+        } else if (ano != null) {
+            carros = carroRepository.findByAnoFabricacao(ano);
+        } else {
+            carros = carroRepository.findAll();
+        }
+
+        return carros.stream()
+                .map(this::toDto)
+                .toList();
+    }
 }

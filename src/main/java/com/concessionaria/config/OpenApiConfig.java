@@ -12,8 +12,8 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI(){
         return new OpenAPI()
                 .info(new Info()
-                        .title("Concessionaria")
+                        .title("API Concessionária Marcelo Gomes")
+                        .description("API para controle de estoque de veículos e cadastro de clientes da concessionária.")
                         .version("1.0.0"));
     }
-
 }
