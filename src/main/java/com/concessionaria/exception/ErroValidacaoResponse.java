@@ -1,4 +1,6 @@
 package com.concessionaria.exception;
 
-public record ErroValidacaoResponse() {
+import java.util.List;
+
+public record ErroValidacaoResponse(int status, List<ErroCampo> erros) {
 }

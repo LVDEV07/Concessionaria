@@ -1,7 +1,7 @@
 package com.concessionaria.exception;
 
 public class CpfInvalidoException extends RuntimeException {
-  public CpfInvalidoException(String message) {
-    super(message);
-  }
+    public CpfInvalidoException(String mensagem) {
+        super(mensagem);
+    }
 }
