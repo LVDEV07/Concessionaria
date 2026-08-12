@@ -2,11 +2,8 @@ package com.concessionaria.controller;
 
 import com.concessionaria.dto.CarroRequestDto;
 import com.concessionaria.dto.CarroResumoDto;
-import com.concessionaria.model.Carro;
-import com.concessionaria.repository.CarroRepository;
 import com.concessionaria.service.CarroService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,15 +37,14 @@ public class CarroController {
     }
 
     @PutMapping("/{id}")
-    public Carro atualizarCarro(@PathVariable("id") Long id, @RequestBody @Valid CarroRequestDto dto){
-        carro.setId(id);
-        return carroRepository.save(carro);
+    public CarroResumoDto atualizarCarro(@PathVariable("id") Long id, @RequestBody @Valid CarroRequestDto dto){
+        return carroService.atualizar(id,dto);
     }
 
 
     @DeleteMapping("/{id}")
     public void deletarCarro(@PathVariable("id") Long id){
-        carroRepository.deleteById(id);
+        carroService.deletar(id);
     }
 
 

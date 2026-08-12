@@ -31,7 +31,6 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     public Cliente atualizarCliente(@PathVariable("id") Long id, @RequestBody Cliente cliente){
-        cliente.setId(id);
         return clienteRepository.save(cliente);
     }
 

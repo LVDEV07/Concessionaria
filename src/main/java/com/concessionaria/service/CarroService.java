@@ -128,5 +128,11 @@ public class CarroService {
         );
     }
 
+    public void deletar(Long id){
+        carroRepository.findById(id).orElseThrow(() -> new RuntimeException("ID não encontrado"));
+        carroRepository.deleteById(id);
+
+    }
+
 
 }
